@@ -1,0 +1,18 @@
+import pygame,sys
+pygame.init()
+s=pygame.display.set_mode((800,500));pygame.display.set_caption("Q19 Bouncing Ball")
+x,y=400,50;vx,vy=3,0;g=0.6;rest=0.85
+r=25;clock=pygame.time.Clock();run=True
+while run:
+    for e in pygame.event.get():
+        if e.type==pygame.QUIT: run=False
+    vy+=g; x+=vx; y+=vy
+    if x-r<0 or x+r>800: vx=-vx
+    if y+r>500:
+        y=500-r; vy=-vy*rest
+        if abs(vy)<1: vy=0
+    s.fill((30,30,30))
+    pygame.draw.rect(s,(50,200,50),(0,450,800,50))
+    pygame.draw.circle(s,(200,50,50),(int(x),int(y)),r)
+    pygame.display.flip();clock.tick(60)
+pygame.quit();sys.exit()
