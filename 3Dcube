@@ -1,0 +1,21 @@
+import pygame,os,sys,math
+pygame.init()
+s=pygame.display.set_mode((1000,700));pygame.display.set_caption("Q5 Cube Translate")
+def proj(v,camz=5): return (int(500+v[0]*200/(v[2]+camz)),int(350-v[1]*200/(v[2]+camz)))
+cube=[(-1,-1,-1),(1,-1,-1),(1,1,-1),(-1,1,-1),(-1,-1,1),(1,-1,1),(1,1,1),(-1,1,1)]
+edges=[(0,1),(1,2),(2,3),(3,0),(4,5),(5,6),(6,7),(7,4),(0,4),(1,5),(2,6),(3,7)]
+def draw_cube(offset=(0,0,0),col=(0,0,0)):
+    vs=[(x+offset[0],y+offset[1],z+offset[2]) for x,y,z in cube]
+    vs2=[proj(v) for v in vs]
+    for a,b in edges: pygame.draw.line(s,col,vs2[a],vs2[b],3)
+r=True
+while r:
+    for e in pygame.event.get():
+        if e.type==pygame.QUIT: r=False
+        if e.type==pygame.KEYDOWN and e.key==pygame.K_ESCAPE: r=False
+    s.fill((255,255,255))
+    draw_cube((0,0,0),(30,30,200))
+    draw_cube((2,3,5),(200,30,30))
+    pygame.draw.rect(s,(0,0,0),(20,20,260,60),2); s.blit(pygame.font.SysFont(None,36).render("Blue: origin  Red: translated (2,3,5)",1,(0,0,0)),(30,30))
+    pygame.display.flip()
+pygame.quit();sys.exit()
