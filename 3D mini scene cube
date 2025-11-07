@@ -1,0 +1,29 @@
+import pygame,os,sys,math
+pygame.init()
+s=pygame.display.set_mode((1200,700));pygame.display.set_caption("Q7 House")
+# cube base vertices
+cube=[(-1,-1,-1),(1,-1,-1),(1,1,-1),(-1,1,-1),(-1,-1,1),(1,-1,1),(1,1,1),(-1,1,1)]
+pyr=[(0,1.6,0),(-1,1,1),(1,1,1),(1,1,-1),(-1,1,-1)]
+edges_cube=[(0,1),(1,2),(2,3),(3,0),(4,5),(5,6),(6,7),(7,4),(0,4),(1,5),(2,6),(3,7)]
+def rot(p,a): x,y,z=p; ca,sa=math.cos(a),math.sin(a); return (x*ca-z*sa,y,x*sa+z*ca)
+def proj(v): return (int(600+v[0]*150/(v[2]+5)),int(350-v[1]*150/(v[2]+5)))
+a=0;clock=pygame.time.Clock();run=True
+while run:
+    for e in pygame.event.get():
+        if e.type==pygame.QUIT: run=False
+        if e.type==pygame.KEYDOWN and e.key==pygame.K_ESCAPE: run=False
+    s.fill((200,230,255))
+    # cube scaled and rotated
+    base=[(x*1.2,y*1.0,z*1.2) for x,y,z in cube]
+    base=[rot(p,a) for p in base]
+    vs=[proj((x,y,z+4)) for x,y,z in base]
+    for u,v in edges_cube: pygame.draw.line(s,(100,50,20),vs[u],vs[v],4)
+    # pyramid (roof) scaled, rotated, shifted above cube
+    roof=[rot((x*1.3,y*0.9,z*1.3),-a/1.5) for x,y,z in pyr]
+    roof=[(x, y+0.9, z+4) for x,y,z in roof]
+    rv=[proj(p) for p in roof]
+    pygame.draw.polygon(s,(180,30,30),rv)
+    s.blit(pygame.font.SysFont(None,36).render("House: cube(base) + pyramid(roof)",1,(0,0,0)),(20,20))
+    a+=0.02
+    pygame.display.flip();clock.tick(60)
+pygame.quit();sys.exit()
