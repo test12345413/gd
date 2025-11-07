@@ -1,0 +1,26 @@
+import pygame, os
+from PIL import Image, ImageDraw
+pygame.init()
+screen = pygame.display.set_mode((1000, 500))
+pygame.display.set_caption("2D Platformer - Power-Up Scale")
+font = pygame.font.SysFont(None, 40)
+# Create default image if not found
+if not os.path.exists("logo.jpg"):
+    img = Image.new("RGB", (200, 200), "skyblue")
+    d = ImageDraw.Draw(img)
+    d.ellipse((50, 50, 150, 150), fill="orange")
+    img.save("logo.jpg")
+img = pygame.image.load("logo.jpg")
+normal = pygame.transform.scale(img, (200, 200))
+powered = pygame.transform.scale(img, (400, 400))
+screen.fill("white")
+screen.blit(normal, (100, 150))
+screen.blit(powered, (500, 50))
+screen.blit(font.render("Normal", True, "black"), (150, 100))
+screen.blit(font.render("After Power-Up (2x)", True, "black"), (550, 20))
+pygame.display.flip()
+running = True
+while running:
+    for e in pygame.event.get():
+        if e.type == pygame.QUIT: running = False
+pygame.quit()
