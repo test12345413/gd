@@ -1,0 +1,6 @@
+import pygame, sys pygame.init() scr = pygame.display.set_mode((800,500)) pygame.display.set_caption("Treasure Hunt")
+BLACK,WHITE,GRAY = (0,0,0),(255,255,255),(40,40,40) BLUE,GOLD,GREEN = (80,170,255),(255,220,80),(0,220,160) fT = pygame.font.SysFont("Consolas",28,bold=True) fD = pygame.font.SysFont("Consolas",20) fP = pygame.font.SysFont("Consolas",15,italic=True)
+dialogues = [ ("Narrator","Arin enters the ancient ruins."), ("Narrator","The Emerald Crown awaits somewhere inside."), ("Arin","I must retrieve it for my kingdom.") ]
+box = pygame.Rect(50,330,700,140) i=0 def show(s,t): scr.fill(BLACK) scr.blit(fT.render("Quest: Emerald Crown",True,GOLD),(240,30)) pygame.draw.rect(scr,GRAY,box,border_radius=10) pygame.draw.rect(scr,WHITE,box,2,border_radius=10) scr.blit(fT.render(s,True,BLUE if s=="Arin" else GREEN),(70,350)) scr.blit(fD.render(t,True,WHITE),(70,390)) scr.blit(fP.render("Press SPACE...",True,(180,180,180)),(600,470)) pygame.display.flip()
+r=True while r: for e in pygame.event.get(): if e.type==pygame.QUIT: r=False if e.type==pygame.KEYDOWN and e.key in (pygame.K_SPACE,pygame.K_RETURN): i+=1; r = i<len(dialogues) if r: show(*dialogues[i])
+pygame.quit(); sys.exit()
