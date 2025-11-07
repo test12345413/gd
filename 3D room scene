@@ -1,0 +1,21 @@
+import pygame,sys,math
+pygame.init()
+s=pygame.display.set_mode((600,400))
+pygame.display.set_caption("Q20 Light Move")
+clock=pygame.time.Clock()
+cx,cy=300,200;r=60;t=0
+run=True
+while run:
+    for e in pygame.event.get():
+        if e.type==pygame.QUIT:run=False
+    dt=clock.tick(60)/1000;t+=dt
+    lx=cx+150*math.cos(t);ly=cy+150*math.sin(t)
+    dx=(lx-cx)/150;dy=(ly-cy)/150
+    dot=max(0,1-(abs(dx)+abs(dy))*0.7)
+    col=int(dot*255)
+    s.fill((30,30,30))
+    pygame.draw.rect(s,(50,50,50),(100,50,400,300),5)
+    pygame.draw.circle(s,(col,col,col),(cx,cy),r)
+    pygame.draw.circle(s,(255,200,100),(int(lx),int(ly)),10)
+    pygame.display.flip()
+pygame.quit();sys.exit()
