@@ -1,0 +1,7 @@
+import pygame, sys pygame.init() scr = pygame.display.set_mode((800,500)) pygame.display.set_caption("Shooting Tutorial")
+BLACK,WHITE,GRAY = (0,0,0),(255,255,255),(40,40,40) BLUE,RED,GREEN = (80,170,255),(255,100,100),(0,220,160) fT = pygame.font.SysFont("Consolas",28,bold=True) fD = pygame.font.SysFont("Consolas",18) fP = pygame.font.SysFont("Consolas",15,italic=True)
+dialogues = [ ("Instructor","Welcome to Training Range Bravo."), ("Instructor","This is a safe zone — no enemies, just learning."), ("Instructor","Move your aim with your mouse to target dummy boards."), ("Instructor","Press 'R' to reload whenever your ammo runs out."), ("Instructor","Hit 5 targets and reload twice to complete training.") ]
+box = pygame.Rect(50,330,700,140) i=0
+def show(s,t): scr.fill(BLACK) scr.blit(fT.render("Tutorial: Safe Shooting Range",True,RED),(200,30)) pygame.draw.rect(scr,GRAY,box,border_radius=10) pygame.draw.rect(scr,WHITE,box,2,border_radius=10) scr.blit(fT.render(s,True,GREEN),(70,350)) scr.blit(fD.render(t,True,WHITE),(70,390)) scr.blit(fP.render("Press SPACE...",True,(180,180,180)),(600,470)) pygame.display.flip()
+running=True while running: for e in pygame.event.get(): if e.type==pygame.QUIT: running=False if e.type==pygame.KEYDOWN and e.key in (pygame.K_SPACE,pygame.K_RETURN): i+=1; running = i<len(dialogues) if running: show(*dialogues[i])
+pygame.quit(); sys.exit()
