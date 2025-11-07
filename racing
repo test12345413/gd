@@ -1,0 +1,7 @@
+import pygame, sys pygame.init() scr = pygame.display.set_mode((800,500)) pygame.display.set_caption("Racing Level Objectives")
+BLACK,WHITE,GRAY = (0,0,0),(255,255,255),(40,40,40) BLUE,ORANGE,GREEN = (80,170,255),(255,150,70),(0,220,160) fT = pygame.font.SysFont("Consolas",28,bold=True) fD = pygame.font.SysFont("Consolas",20) fP = pygame.font.SysFont("Consolas",15,italic=True)
+dialogues = [ ("Briefing","Mission 1: Time Trial - Finish track under 1:25."), ("Briefing","Mission 2: Collect 10 Turbo Coins on the road."), ("Briefing","Mission 3: Pass all checkpoints before timer ends.") ]
+box = pygame.Rect(50,330,700,140) i=0
+def show(s,t): scr.fill(BLACK) scr.blit(fT.render("Racing Challenge: Track Alpha",True,ORANGE),(200,30)) pygame.draw.rect(scr,GRAY,box,border_radius=10) pygame.draw.rect(scr,WHITE,box,2,border_radius=10) scr.blit(fT.render(s,True,GREEN),(70,350)) scr.blit(fD.render(t,True,WHITE),(70,390)) scr.blit(fP.render("Press SPACE...",True,(180,180,180)),(600,470)) pygame.display.flip()
+r=True while r: for e in pygame.event.get(): if e.type==pygame.QUIT: r=False if e.type==pygame.KEYDOWN and e.key in (pygame.K_SPACE,pygame.K_RETURN): i+=1; r = i<len(dialogues) if r: show(*dialogues[i])
+pygame.quit(); sys.exit()
