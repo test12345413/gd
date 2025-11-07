@@ -1,0 +1,21 @@
+import pygame,os
+pygame.init()
+screen=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+pygame.display.set_caption("Poster Design - Logo Translation")
+if os.path.exists("logo.jpg"):
+    logo=pygame.image.load("logo.jpg")
+else:
+    logo=pygame.Surface((200,150));logo.fill((255,140,0));
+    pygame.draw.rect(logo,(255,255,255),(10,10,180,130),5)
+font=pygame.font.SysFont(None,50)
+orig_pos=(200,300)
+trans_pos=(orig_pos[0]+150,orig_pos[1]+80)
+running=True
+while running:
+    for e in pygame.event.get():
+        if e.type==pygame.QUIT or (e.type==pygame.KEYDOWN and e.key==pygame.K_ESCAPE):running=False
+    screen.fill((255,255,255))
+    screen.blit(logo,orig_pos);screen.blit(font.render("Original",True,(0,0,0)),(orig_pos[0],orig_pos[1]-60))
+    screen.blit(logo,trans_pos);screen.blit(font.render("Translated",True,(0,0,0)),(trans_pos[0],trans_pos[1]-60))
+    pygame.display.flip()
+pygame.quit()
