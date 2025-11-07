@@ -1,0 +1,24 @@
+import pygame,os,sys
+pygame.init()
+if os.path.exists("logo.jpg"):img=pygame.image.load("logo.jpg")
+else:img=pygame.Surface((400,300));img.fill((200,100,0))
+img=pygame.transform.smoothscale(img,(300,200))
+w,h=img.get_width(),img.get_height()
+night=pygame.Surface((w,h))
+for x in range(w):
+    for y in range(h):
+        r,g,b=img.get_at((x,y))[:3];gray=int(0.3*r+0.59*g+0.11*b);night.set_at((x,y),(0,min(255,gray+90),0))
+s=pygame.display.set_mode((900,400))
+pygame.display.set_caption("Q8-Night Vision Filter")
+font=pygame.font.SysFont(None,40)
+s.fill((20,20,20))
+s.blit(img,(100,100));s.blit(night,(500,100))
+s.blit(font.render("Original",True,(255,255,255)),(130,60))
+s.blit(font.render("Night Vision",True,(0,255,0)),(520,60))
+pygame.display.flip()
+run=True
+while run:
+    for e in pygame.event.get():
+        if e.type==pygame.QUIT:run=False
+pygame.quit();sys.exit()
+
